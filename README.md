@@ -10,3 +10,8 @@ pip install open3d
 pip install opencv-python
 ```
 To activate the environment, run ```conda activate recon```
+
+To run the Robust Reconstruction of Indoor Scenes(RRIS)
+```
+python main.py --name rris_all --obj table --num 1 --debug_mode
+```

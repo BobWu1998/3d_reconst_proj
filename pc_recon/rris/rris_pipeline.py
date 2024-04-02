@@ -31,7 +31,7 @@ def pipeline(args):
     config['tsdf_cubic_size'] = 0.75
     config['icp_method'] = "color"
     config['global_registration'] = "ransac"
-    config['python_multi_threading'] = False
+    config['python_multi_threading'] = args.multi_thread
     config['folder_fragment'] = "fragments/"
     config['path_dataset'] = "dataset/"
     config['n_frames_per_fragment'] = args.n_frames_per_fragment
@@ -61,12 +61,12 @@ def pipeline(args):
     set_default_value(config, "template_global_mesh", "scene/integrated.ply")
     set_default_value(config, "template_global_traj", "scene/trajectory.log")
 
-    set_default_value(config, "debug_mode", True)
+    set_default_value(config, "debug_mode", args.debug_mode)
     # config['n_fragments'] = "n_fragments"
     
     
     # make_fragments.run(config, args)
-    # register_fragments.run(config, args)
+    register_fragments.run(config, args)
     # refine_registration.run(config)
-    integrate_scene.run(config, args)
+    # integrate_scene.run(config, args)
     
