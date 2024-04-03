@@ -30,8 +30,12 @@ def scalable_integrate_rgb_frames(path_dataset, intrinsic, config, args):
         sdf_trunc=0.04,
         color_type=o3d.pipelines.integration.TSDFVolumeColorType.RGB8)
 
-    pose_graph_fragment = o3d.io.read_pose_graph(
-        join(path_dataset, config["template_refined_posegraph_optimized"]))
+    if args.pc_method == 'rgst_frag':
+        pose_graph_fragment = o3d.io.read_pose_graph(
+            join(path_dataset, config["template_global_posegraph_optimized"]))
+    else:
+        pose_graph_fragment = o3d.io.read_pose_graph(
+            join(path_dataset, config["template_refined_posegraph_optimized"]))
 
     for fragment_id in range(len(pose_graph_fragment.nodes)):
         pose_graph_rgbd = o3d.io.read_pose_graph(

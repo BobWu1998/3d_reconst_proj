@@ -11,5 +11,5 @@ if __name__ == "__main__":
     # use the options
     name = args.name
 
-    if args.pc_method == 'rris':
+    if args.pc_method in ['rris', 'rgst_frag']:
         rris.pipeline(args)
