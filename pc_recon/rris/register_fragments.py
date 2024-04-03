@@ -1,10 +1,4 @@
-# ----------------------------------------------------------------------------
-# -                        Open3D: www.open3d.org                            -
-# ----------------------------------------------------------------------------
-# Copyright (c) 2018-2023 www.open3d.org
-# SPDX-License-Identifier: MIT
-# ----------------------------------------------------------------------------
-
+# Adapted from Open3D: www.open3d.org
 # examples/python/reconstruction_system/register_fragments.py
 
 import multiprocessing

@@ -1,10 +1,4 @@
-# ----------------------------------------------------------------------------
-# -                        Open3D: www.open3d.org                            -
-# ----------------------------------------------------------------------------
-# Copyright (c) 2018-2023 www.open3d.org
-# SPDX-License-Identifier: MIT
-# ----------------------------------------------------------------------------
-
+# Adapted from Open3D: www.open3d.org
 # examples/python/reconstruction_system/make_fragments.py
 
 import math
@@ -13,7 +7,7 @@ import os, sys
 import numpy as np
 import open3d as o3d
 from scipy.io import loadmat
-from pc_recon.rris.utils import *
+from utils import *
 
 pyexample_path = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.append(pyexample_path)

@@ -33,7 +33,7 @@ def pipeline(args):
     config['global_registration'] = "ransac"
     config['python_multi_threading'] = args.multi_thread
     config['folder_fragment'] = f"fragments_{args.obj}_{args.num}/"
-    config['path_dataset'] = f"{args.name}_dataset/"
+    config['path_dataset'] = f"{args.save_path}/{args.name}_dataset/"
     config['n_frames_per_fragment'] = args.n_frames_per_fragment
     config['depth_scale'] = 1
     config['n_keyframes_per_n_frame'] = 10 # 5
@@ -60,16 +60,18 @@ def pipeline(args):
                       f"scene_{args.obj}_{args.num}/refined_registration_optimized.json")
     set_default_value(config, "template_global_mesh", f"scene_{args.obj}_{args.num}/integrated.ply")
     set_default_value(config, "template_global_traj", f"scene_{args.obj}_{args.num}/trajectory.log")
+    set_default_value(config, "template_global_pc", f"scene_{args.obj}_{args.num}/pc.ply")
 
     set_default_value(config, "debug_mode", args.debug_mode)
+    set_default_value(config, "write_global_pc", args.write_global_pc)
     
     if args.pc_method == 'rgst_frag':
         make_fragments.run(config, args)
         register_fragments.run(config, args)
         integrate_scene.run(config, args)
     else:
-        make_fragments.run(config, args)
-        register_fragments.run(config, args)
+        # make_fragments.run(config, args)
+        # register_fragments.run(config, args)
         refine_registration.run(config)
-        integrate_scene.run(config, args)
+        # integrate_scene.run(config, args)
     

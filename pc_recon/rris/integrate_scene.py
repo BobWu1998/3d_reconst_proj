@@ -1,22 +1,17 @@
-# ----------------------------------------------------------------------------
-# -                        Open3D: www.open3d.org                            -
-# ----------------------------------------------------------------------------
-# Copyright (c) 2018-2023 www.open3d.org
-# SPDX-License-Identifier: MIT
-# ----------------------------------------------------------------------------
-
+# Adapted from Open3D: www.open3d.org
 # examples/python/reconstruction_system/integrate_scene.py
 
 import numpy as np
 import math
 import os, sys
 import open3d as o3d
+import cv2
 
 pyexample_path = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.append(pyexample_path)
 
 from open3d_example import *
-from pc_recon.rris.utils import *
+from utils import *
 
 def scalable_integrate_rgb_frames(path_dataset, intrinsic, config, args):
     poses = []
@@ -51,13 +46,18 @@ def scalable_integrate_rgb_frames(path_dataset, intrinsic, config, args):
                  len(pose_graph_rgbd.nodes)))
             rgbd = read_rgbd_image(rgb_files[frame_id_abs],
                                    depth_files[frame_id_abs], False, config)
+            
+            
             pose = np.dot(pose_graph_fragment.nodes[fragment_id].pose,
                           pose_graph_rgbd.nodes[frame_id].pose)
+            # breakpoint()
             volume.integrate(rgbd, intrinsic, np.linalg.inv(pose))
             poses.append(pose)
 
     mesh = volume.extract_triangle_mesh()
     mesh.compute_vertex_normals()
+
+    
     if config["debug_mode"]:
         o3d.visualization.draw_geometries([mesh])
 

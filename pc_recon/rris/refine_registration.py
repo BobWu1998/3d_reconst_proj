@@ -1,10 +1,4 @@
-# ----------------------------------------------------------------------------
-# -                        Open3D: www.open3d.org                            -
-# ----------------------------------------------------------------------------
-# Copyright (c) 2018-2023 www.open3d.org
-# SPDX-License-Identifier: MIT
-# ----------------------------------------------------------------------------
-
+# Adapted from Open3D: www.open3d.org
 # examples/python/reconstruction_system/refine_registration.py
 
 import multiprocessing
@@ -13,6 +7,7 @@ import sys
 
 import numpy as np
 import open3d as o3d
+import copy
 
 pyexample_path = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.append(pyexample_path)
@@ -182,13 +177,45 @@ def make_posegraph_for_refined_scene(ply_file_names, config):
             matching_results[r].transformation = results[i][0]
             matching_results[r].information = results[i][1]
     else:
+        flip_transform = [[1, 0, 0, 0], [0, -1, 0, 0], [0, 0, -1, 0], [0, 0, 0, 1]]
+        r = next(iter(matching_results))
+        ref_idx = matching_results[r].s
+        reference_cloud = o3d.io.read_point_cloud(ply_file_names[ref_idx]).transform(flip_transform)
+        pairwise_transformations = []
+        pairs_idx = []
+
         for r in matching_results:
             (matching_results[r].transformation,
              matching_results[r].information) = \
                 register_point_cloud_pair(ply_file_names,
                                           matching_results[r].s, matching_results[r].t,
                                           matching_results[r].transformation, config)
-
+            # source = o3d.io.read_point_cloud(ply_file_names[matching_results[r].s])
+            # target = o3d.io.read_point_cloud(ply_file_names[matching_results[r].t])
+            pairs_idx.append((matching_results[r].s, matching_results[r].t))
+            pairwise_transformations.append(matching_results[r].transformation)
+        
+        # transform all point clouds to the reference frame
+        for i, (s, t) in enumerate(pairs_idx):
+            if s==ref_idx: # transform target to source with transform(np.linalg.inv(transformation))
+                target = o3d.io.read_point_cloud(ply_file_names[t])
+                transformation = pairwise_transformations[i]
+                target_temp = copy.deepcopy(target)
+                target_temp.transform(np.linalg.inv(transformation))
+                target_temp.transform(flip_transform)
+                reference_cloud += target_temp
+            elif t==ref_idx:
+                source = o3d.io.read_point_cloud(ply_file_names[s])
+                transformation = pairwise_transformations[i]
+                source_temp = copy.deepcopy(source)
+                source_temp.transform(transformation)
+                source_temp.transform(flip_transform)
+                reference_cloud += source_temp
+            
+        if config['write_global_pc']:
+            o3d.io.write_point_cloud(join(config["path_dataset"], config["template_global_pc"]), reference_cloud)
+        
+        
     pose_graph_new = o3d.pipelines.registration.PoseGraph()
     odometry = np.identity(4)
     pose_graph_new.nodes.append(

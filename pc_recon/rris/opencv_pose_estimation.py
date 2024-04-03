@@ -1,10 +1,4 @@
-# ----------------------------------------------------------------------------
-# -                        Open3D: www.open3d.org                            -
-# ----------------------------------------------------------------------------
-# Copyright (c) 2018-2023 www.open3d.org
-# SPDX-License-Identifier: MIT
-# ----------------------------------------------------------------------------
-
+# Adapted from Open3D: www.open3d.org
 # examples/python/reconstruction_system/opencv_pose_estimation.py
 
 # following code is tested with OpenCV 3.2.0 and Python2.7
