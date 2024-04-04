@@ -17,7 +17,9 @@ from open3d_example import *
 def pipeline(config):
     _path = join(config['root'], config["path_dataset"], config["folder_fragment"])
     # if path does not exist, create it'
-    if not os.path.exists(_path):
+    if not os.path.exists(_path) or config['overwrite']:
+        if config['overwrite']: 
+            print('overwriting the previous data')
         make_clean_folder(join(config['root'], config["path_dataset"], config["folder_fragment"]))
         if config['method'] == 'rgst_frag':
             make_fragments.run(config)

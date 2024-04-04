@@ -16,6 +16,7 @@ class Options(object):
         gen.add_argument('--root', type=str, default='/home/bobwu/Documents/3d_reconst_proj/', help='Path to the root directory')
         gen.add_argument('--debug_mode', action='store_true', help='Debug mode')
         gen.add_argument('--enable_viz', action='store_true', help='Visualization')
+        gen.add_argument('--overwrite', action='store_true', help='Overwriting')
         gen.add_argument('--multi_thread', action='store_true', help='Debug mode')
         gen.add_argument('--depth_scale', type=float, default=1000, help='Depth scale')
         gen.add_argument('--depth_max', type=float, default=3.0, help='Maximum depth')
@@ -46,3 +47,7 @@ class Options(object):
         
         frag = self.parser.add_argument_group('Fragment')
         frag.add_argument('--n_frames_per_fragment', type=int, default=50, help='Number of frames per fragment')
+        
+        viz = self.parser.add_argument_group('visualizer')
+        viz.add_argument('--viz_mode', type=str, choices=['mesh', 'pcd'], default='mesh', help='Visualization mode')
+        viz.add_argument('--viz_mesh_type', type=str, choices=['volumetric', 'poisson', 'as'], default='volumetric', help='Visualization mode')

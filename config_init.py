@@ -40,6 +40,8 @@ def get_config(args):
     set_default_value(config, "template_refined_posegraph_optimized",
                       f"scene_{args.obj}_{args.num}/refined_registration_optimized.json")
     set_default_value(config, "template_global_mesh", f"scene_{args.obj}_{args.num}/integrated.ply")
+    set_default_value(config, "template_global_mesh_poisson", f"scene_{args.obj}_{args.num}/poisson.ply")
+    set_default_value(config, "template_global_mesh_as", f"scene_{args.obj}_{args.num}/as.ply")
     set_default_value(config, "template_global_traj", f"scene_{args.obj}_{args.num}/trajectory.log")
     set_default_value(config, "template_global_pc", f"scene_{args.obj}_{args.num}/pc.ply")
 

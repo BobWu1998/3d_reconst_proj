@@ -32,7 +32,7 @@ def poisson_surface_recon(path_dataset, config):
     vertices_to_remove = densities < np.quantile(densities, 0.01)
     mesh.remove_vertices_by_mask(vertices_to_remove)
 
-    mesh_name = join(path_dataset, config["template_global_mesh"])
+    mesh_name = join(path_dataset, config["template_global_mesh_poisson"])
     o3d.io.write_triangle_mesh(mesh_name, mesh, False, True)
     
     if config['enable_viz']:

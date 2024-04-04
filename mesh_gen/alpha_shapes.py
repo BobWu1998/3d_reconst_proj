@@ -16,7 +16,7 @@ def run_alpha_shapes(path_dataset, config):
     alpha = config['alpha']
     mesh = o3d.geometry.TriangleMesh.create_from_point_cloud_alpha_shape(pcd, alpha)
     
-    mesh_name = join(path_dataset, config["template_global_mesh"])
+    mesh_name = join(path_dataset, config["template_global_mesh_as"])
     o3d.io.write_triangle_mesh(mesh_name, mesh, False, True)
     if config['enable_viz']:
         o3d.visualization.draw_geometries([mesh])
