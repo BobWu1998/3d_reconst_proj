@@ -36,6 +36,7 @@ class Options(object):
         mesh = self.parser.add_argument_group('Mesh')
         mesh.add_argument('--mesh_method', type=str, choices=['volumetric', 'poisson', 'as'],
                         default='volumetric', help='Use entire rris pipeline')
+        mesh.add_argument('--tsdf_cubic_size', type=float, default=2.5, help='TSDF cubic size')
         mesh.add_argument('--poisson_voxel_size', type=float, default=0.01, help='Voxel size for poisson reconstruction')
         mesh.add_argument('--as_voxel_size', type=float, default=0.01, help='Voxel size for poisson reconstruction')
         mesh.add_argument('--alpha', type=float, default=0.02, help='Voxel size for poisson reconstruction')

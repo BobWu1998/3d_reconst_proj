@@ -10,7 +10,7 @@ def run_alpha_shapes(path_dataset, config):
     # estimate the normals of the point cloud
     pcd.normals = o3d.utility.Vector3dVector(np.zeros((1, 3)))
     pcd.estimate_normals()
-    pcd.orient_normals_consistent_tangent_plane(20) # flip the direction of normal for bottem surface of thin table
+    pcd.orient_normals_consistent_tangent_plane(30) # flip the direction of normal for bottem surface of thin table
     
     # mesh reconstruction
     alpha = config['alpha']

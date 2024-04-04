@@ -11,7 +11,6 @@ def get_config(args):
     config['depth_diff_max'] = 0.03
     config['preference_loop_closure_odometry'] = 0.1
     config['preference_loop_closure_registration'] = 5.0
-    config['tsdf_cubic_size'] = 1.25 
     config['icp_method'] = "color"
     config['global_registration'] = "ransac"
     config['python_multi_threading'] = args.multi_thread

@@ -10,7 +10,6 @@ scene_nums=( 3 1 1 1 2)
 save_path=/home/bobwu/Documents/shared/recon_results_v1/
 
 method=rris
-mesh_method=volumetric
 
 # Iterate through the arrays
 for i in "${!objs[@]}"; do
@@ -19,7 +18,7 @@ for i in "${!objs[@]}"; do
     for num in $(seq 1 $scene_num); do
         echo "Running $method $mesh_method on $obj $num"
         python main.py \
-            --name "$method"_"$mesh_method"_"$obj"_"$num" \
+            --name "$method"_"$obj"_"$num" \
             --obj "$obj" \
             --num "$num" \
             --method "$method" \
