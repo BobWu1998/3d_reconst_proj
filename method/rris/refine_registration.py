@@ -84,15 +84,26 @@ def multiscale_icp(source,
                 # Colored ICP is sensitive to threshold.
                 # Fallback to preset distance threshold that works better.
                 # TODO: make it adjustable in the upgraded system.
-                result_icp = o3d.pipelines.registration.registration_colored_icp(
-                    source_down, target_down, voxel_size[scale],
-                    current_transformation,
-                    o3d.pipelines.registration.
-                    TransformationEstimationForColoredICP(),
-                    o3d.pipelines.registration.ICPConvergenceCriteria(
-                        relative_fitness=1e-6,
-                        relative_rmse=1e-6,
-                        max_iteration=iter))
+                try:
+                    result_icp = o3d.pipelines.registration.registration_colored_icp(
+                        source_down, target_down, voxel_size[scale],
+                        current_transformation,
+                        o3d.pipelines.registration.
+                        TransformationEstimationForColoredICP(),
+                        o3d.pipelines.registration.ICPConvergenceCriteria(
+                            relative_fitness=1e-6,
+                            relative_rmse=1e-6,
+                            max_iteration=iter))
+                except RuntimeError as e:
+                    print(
+                        "Color ICP failed. Falling back to point-to-plane ICP.")
+                    result_icp = o3d.pipelines.registration.registration_icp(
+                        source_down, target_down, distance_threshold,
+                        current_transformation,
+                        o3d.pipelines.registration.
+                        TransformationEstimationPointToPlane(),
+                        o3d.pipelines.registration.ICPConvergenceCriteria(
+                            max_iteration=iter))
             if config["icp_method"] == "generalized":
                 result_icp = o3d.pipelines.registration.registration_generalized_icp(
                     source_down, target_down, distance_threshold,

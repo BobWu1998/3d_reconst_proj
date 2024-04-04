@@ -33,7 +33,7 @@ class Options(object):
         mt.add_argument('--slam_block_count', type=int, default=10000, help='Block count')
         # for running RRIS
         mt.add_argument('--write_global_pc', action='store_true', default=True, help='Write global point cloud')
-        mt.add_argument('--icp_method', type=str, default='color', choices=['color', 'point_to_plane', 'point_to_point'], help='ICP method to use during refinement')
+        mt.add_argument('--icp_method', type=str, default='color', choices=['color', 'point_to_plane', 'point_to_point', 'generalized'], help='ICP method to use during refinement')
         
         mesh = self.parser.add_argument_group('Mesh')
         mesh.add_argument('--mesh_method', type=str, choices=['volumetric', 'poisson', 'as'],
