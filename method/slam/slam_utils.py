@@ -1,4 +1,7 @@
 import open3d as o3d
+
+flip_transform = [[1, 0, 0, 0], [0, -1, 0, 0], [0, 0, -1, 0], [0, 0, 0, 1]]
+
 def extract_trianglemesh(volume, config, file_name=None):
 
     mesh = volume.extract_triangle_mesh()

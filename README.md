@@ -14,7 +14,7 @@ conda activate recon
 pip install open3d
 pip install opencv-python
 ```
-Set the directories:
+Set the directories as environment variables. For example in my case I run:
 ```
 export PATH_TO_REPO=/home/bobwu/Documents/3d_reconst_proj/
 export PATH_TO_RGBD_SCENES=/home/bobwu/Documents/shared/rgbd-scenes/
@@ -66,6 +66,12 @@ python visualize.py --name rris --obj table --num 1 --viz_mode mesh --mesh_metho
 ```
 Available mesh_method: volumetric, poisson, as
 
+## Running the experiments automatically
+I also automated the program to run all scenes at once for both SLAM and RRIS approaches.
+```
+bash slam.sh
+bash rris.sh
+```
 
 
 

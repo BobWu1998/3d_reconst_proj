@@ -9,6 +9,7 @@ import time
 from slam_utils import extract_trianglemesh, write_poses_to_log
 import numpy as np
 
+
 pyexample_path = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.append(pyexample_path)
 
@@ -89,7 +90,9 @@ def run(config):
     mesh = mesh.to_legacy()
     mesh.compute_vertex_normals()
     mesh.compute_triangle_normals()
-    o3d.io.write_triangle_mesh(mesh_name, mesh, False, True)
+    flip_transform = [[1, 0, 0, 0], [0, -1, 0, 0], [0, 0, -1, 0], [0, 0, 0, 1]]
+    # o3d.io.write_triangle_mesh(mesh_name, mesh, False, True)
+    o3d.io.write_triangle_mesh(mesh_name, mesh.transform(flip_transform), False, True)
     
     # save the pose log
     traj_name = join(path_dataset, config["template_global_traj"])

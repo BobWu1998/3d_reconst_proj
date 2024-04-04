@@ -20,6 +20,7 @@ if __name__ == "__main__":
             
         mesh = o3d.io.read_triangle_mesh(mesh_name)
         mesh.compute_vertex_normals()
+        
         o3d.visualization.draw_geometries([mesh])
         
     elif config['viz_mode'] == 'pcd':
