@@ -164,6 +164,7 @@ def process_single_fragment(fragment_id, color_files, depth_files, n_files,
 
 
 def run(config):
+    # breakpoint()
     print('making fragments...')
     rgb_files, depth_files = load_rgbd(config)
     n_files = len(rgb_files)

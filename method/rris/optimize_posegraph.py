@@ -23,7 +23,6 @@ def run_posegraph_optimization(pose_graph_name, pose_graph_optimized_name,
     o3d.io.write_pose_graph(pose_graph_optimized_name, pose_graph)
     o3d.utility.set_verbosity_level(o3d.utility.VerbosityLevel.Error)
 
-
 def optimize_posegraph_for_fragment(path_dataset, fragment_id, config):
     pose_graph_name = join(path_dataset,
                            config["template_fragment_posegraph"] % fragment_id)

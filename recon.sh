@@ -1,15 +1,16 @@
 #!/bin/bash
 
 # Define an array of objects
-objs=( desk kitchen_small meeting_small table table_small)
-scene_nums=( 3 1 1 1 2)
+objs=(desk kitchen_small meeting_small table table_small background)
+scene_nums=(3 1 1 1 2 11)
 
 # objs=(table_small)
 # scene_nums=(2)
-
-save_path=/home/bobwu/Documents/shared/recon_results_v1/
+data_root=/home/bob/Documents/shared/rgbd-scenes/
+save_path=/home/bob/Documents/shared/recon_results_v5/
 
 method=rris
+mesh_method=volumetric
 
 # Iterate through the arrays
 for i in "${!objs[@]}"; do
@@ -24,6 +25,7 @@ for i in "${!objs[@]}"; do
             --method "$method" \
             --mesh_method "$mesh_method" \
             --enable_viz \
+            --data_root "$data_root" \
             --save_path "$save_path"
     done
 done

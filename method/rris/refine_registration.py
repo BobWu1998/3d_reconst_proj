@@ -226,18 +226,20 @@ def make_posegraph_for_refined_scene(ply_file_names, config):
             matching_results[r].s, matching_results[r].t,
             matching_results[r].transformation, matching_results[r].information,
             odometry, pose_graph_new)
-    print(pose_graph_new)
+    if config['verbose']:
+        print(pose_graph_new)
     o3d.io.write_pose_graph(
         join(config["path_dataset"], config["template_refined_posegraph"]),
         pose_graph_new)
 
 
 def run(config):
-    print("refing rough registration of fragments.")
+    print("refing rough registration of fragments...")
     if config['verbose']:
         o3d.utility.set_verbosity_level(o3d.utility.VerbosityLevel.Debug)
     ply_file_names = get_file_list(
         join(config["path_dataset"], config["folder_fragment"]), ".ply")
+    
     make_posegraph_for_refined_scene(ply_file_names, config)
     optimize_posegraph_for_refined_scene(config["path_dataset"], config)
 

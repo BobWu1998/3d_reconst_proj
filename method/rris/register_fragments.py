@@ -67,7 +67,8 @@ def compute_initial_registration(s, t, source_down, target_down, source_fpfh,
                                  target_fpfh, path_dataset, config):
 
     if t == s + 1:  # odometry case
-        print("Using RGBD odometry")
+        if config['verbose']:
+            print("Using RGBD odometry")
         pose_graph_frag = o3d.io.read_pose_graph(
             join(path_dataset,
                  config["template_fragment_posegraph_optimized"] % s))
@@ -191,7 +192,7 @@ def make_posegraph_for_scene(ply_file_names, config):
 
 
 def run(config):
-    print("registering fragments.")
+    print("registering fragments...")
     if config['verbose']:
         o3d.utility.set_verbosity_level(o3d.utility.VerbosityLevel.Debug)
     ply_file_names = get_file_list(
