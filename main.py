@@ -2,11 +2,11 @@ from options import Options
 
 from config_init import get_config
 from method.slam import slam_system
-from method.rris import rris_system, integrate_scene
+from method.rris import rris_system
 
 
 
-import integrate_scene
+import mesh_gen.integrate_scene as integrate_scene
 import mesh_gen.poisson as poisson
 import mesh_gen.alpha_shapes as alpha_shapes
 
