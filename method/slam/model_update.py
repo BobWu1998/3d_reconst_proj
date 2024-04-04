@@ -53,6 +53,7 @@ def model_update(rgb_files, depth_files, intrinsic, n_files, config):
             except RuntimeError as e:
                 # print(f"Tracking failed for this frame due to error: {e}")
                 print(f"Tracking failed for this frame, skipping")
+                # Issue: https://github.com/isl-org/Open3D/issues/5279
                 err_pose = -1*np.identity(4)
                 poses.append(err_pose)
                 continue

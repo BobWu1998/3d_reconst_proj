@@ -7,7 +7,7 @@ def get_config(args):
     # load everything in the args into the config
     config = vars(args)
     config['path_intrinsic'] = ""
-    config['voxel_size'] = 0.05 #0.025
+    config['voxel_size'] = 0.025 #0.025
     config['depth_diff_max'] = 0.03
     config['preference_loop_closure_odometry'] = 0.1
     config['preference_loop_closure_registration'] = 5.0
