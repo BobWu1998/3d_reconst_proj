@@ -15,13 +15,19 @@ import refine_registration
 from open3d_example import *
 
 def pipeline(config):
-    if config['method'] == 'rgst_frag':
-        make_fragments.run(config)
-        register_fragments.run(config)
+    _path = join(config['root'], config["path_dataset"], config["folder_fragment"])
+    # if path does not exist, create it'
+    if not os.path.exists(_path):
+        make_clean_folder(join(config['root'], config["path_dataset"], config["folder_fragment"]))
+        if config['method'] == 'rgst_frag':
+            make_fragments.run(config)
+            register_fragments.run(config)
+        else:
+            make_fragments.run(config)
+            register_fragments.run(config)
+            refine_registration.run(config)
     else:
-        make_fragments.run(config)
-        register_fragments.run(config)
-        refine_registration.run(config)
+        print(f"Folder {_path} already exists. Skipping the rris process.")
 
         
         

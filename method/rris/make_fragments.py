@@ -160,7 +160,6 @@ def process_single_fragment(fragment_id, color_files, depth_files, n_files,
 
 
 def run(config):
-    make_clean_folder(join(config['root'], config["path_dataset"], config["folder_fragment"]))
     rgb_files, depth_files = load_rgbd(config)
     n_files = len(rgb_files)
     n_fragments = int(

@@ -1,12 +1,19 @@
 import os
 from scipy.io import loadmat
+import glob
+
 
 def load_rgbd(config):
     # load the rgb and depth files
     data_dir = os.path.join(config['data_root'], config['obj'], f"{config['obj']}_{config['num']}")
     
-    mat_data = loadmat(data_dir+'.mat')
-    num_images = mat_data['bboxes'].shape[1]
+    # mat_data = loadmat(data_dir+'.mat')
+    # num_images = mat_data['bboxes'].shape[1]
+
+    png_files = glob.glob(f"{data_dir}/*.png")
+    num_png_files = len(png_files)
+    num_images = num_png_files // 2
+    
     rgb_files = []
     depth_files = []
     
