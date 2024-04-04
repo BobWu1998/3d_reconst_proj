@@ -12,6 +12,8 @@ pc0 = '/home/bobwu/Documents/shared/recon_results/rris_table_1_all_dataset/fragm
 pc1 = '/home/bobwu/Documents/shared/recon_results/rris_table_1_all_dataset/fragments_table_1/fragment_001.ply'
 pc2 = '/home/bobwu/Documents/shared/recon_results/rris_table_1_all_dataset/fragments_table_1/fragment_002.ply'
 
+
+pcd_name = '/home/bobwu/Documents/shared/recon_results/rris_pc_table_1_v1_dataset/scene_table_1/pc.ply'
 pcd = o3d.io.read_point_cloud(pcd_name)
 # Visualize the point cloud
 # o3d.visualization.draw_geometries([o3d.io.read_point_cloud(pc0),o3d.io.read_point_cloud(pc1),o3d.io.read_point_cloud(pc2)])

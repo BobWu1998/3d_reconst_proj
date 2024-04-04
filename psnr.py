@@ -19,6 +19,7 @@ import os
 from scipy.io import loadmat
 from utils import *
 import cv2
+from config_init import get_config
 
 class CameraPose:
 
@@ -85,8 +86,8 @@ def render_rgbd_image(mesh, pose, intrinsic):
     rgbd_image = o3d.geometry.RGBDImage.create_from_color_and_depth(
         o3d.geometry.Image((np.asarray(color) * 255).astype(np.uint8)),
         o3d.geometry.Image((np.asarray(depth) * 1000).astype(np.uint16)),  # Adjust depth scale if necessary
-        # depth_scale=1000.0,  # Depends on the scale of your depth values
-        # depth_trunc=3.0,  # Adjust based on the maximum depth value you care about
+        depth_scale=1000.0,  # Depends on the scale of your depth values
+        depth_trunc=3.0,  # Adjust based on the maximum depth value you care about
         convert_rgb_to_intensity=False
     )
     
@@ -97,15 +98,12 @@ if __name__ == "__main__":
     option = Options()
     args = option.parser.parse_args()
 
-    # use the options
-    name = args.name
-
-    # if args.pc_method in ['rris', 'rgst_frag']:
-    #     rris.pipeline(args)
+    config = get_config(args)
         
-    rgb_files, depth_files = load_rgbd(args)
+    rgb_files, depth_files = load_rgbd(config)
     # Example usage
-    mesh = o3d.io.read_triangle_mesh("/home/bobwu/Documents/3d_reconst_proj/rris_table_1_high_res_v2_dataset/scene_table_1/integrated.ply")
+    mesh_name = '/home/bobwu/Documents/shared/recon_results/slam_table_1_v1_dataset/scene_table_1/integrated.ply'
+    mesh = o3d.io.read_triangle_mesh(mesh_name)
     mesh.compute_vertex_normals()
     pose = np.eye(4)  # Replace with your actual pose matrix
 

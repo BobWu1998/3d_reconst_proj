@@ -6,6 +6,7 @@ import math
 import os, sys
 import open3d as o3d
 import cv2
+from open3d_example import flip_transform
 
 pyexample_path = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.append(pyexample_path)
@@ -13,9 +14,9 @@ sys.path.append(pyexample_path)
 from open3d_example import *
 from utils import *
 
-def scalable_integrate_rgb_frames(path_dataset, intrinsic, config, args):
+def scalable_integrate_rgb_frames(path_dataset, intrinsic, config):
     poses = []
-    rgb_files, depth_files = load_rgbd(args)
+    rgb_files, depth_files = load_rgbd(config)
     n_files = len(rgb_files)
     n_fragments = int(math.ceil(float(n_files) / 
             config['n_frames_per_fragment']))
@@ -25,7 +26,7 @@ def scalable_integrate_rgb_frames(path_dataset, intrinsic, config, args):
         sdf_trunc=0.04,
         color_type=o3d.pipelines.integration.TSDFVolumeColorType.RGB8)
 
-    if args.pc_method == 'rgst_frag':
+    if config['method'] == 'rgst_frag':
         pose_graph_fragment = o3d.io.read_pose_graph(
             join(path_dataset, config["template_global_posegraph_optimized"]))
     else:
@@ -57,8 +58,8 @@ def scalable_integrate_rgb_frames(path_dataset, intrinsic, config, args):
     mesh = volume.extract_triangle_mesh()
     mesh.compute_vertex_normals()
 
-    
-    if config["debug_mode"]:
+    if config['enable_viz']:
+        mesh = mesh.transform(flip_transform)
         o3d.visualization.draw_geometries([mesh])
 
     mesh_name = join(path_dataset, config["template_global_mesh"])
@@ -68,7 +69,7 @@ def scalable_integrate_rgb_frames(path_dataset, intrinsic, config, args):
     write_poses_to_log(traj_name, poses)
 
 
-def run(config, args):
+def run(config):
     print("integrate the whole RGBD sequence using estimated camera pose.")
     if config["path_intrinsic"]:
         intrinsic = o3d.io.read_pinhole_camera_intrinsic(
@@ -76,4 +77,4 @@ def run(config, args):
     else:
         intrinsic = o3d.camera.PinholeCameraIntrinsic(
             o3d.camera.PinholeCameraIntrinsicParameters.PrimeSenseDefault)
-    scalable_integrate_rgb_frames(config["path_dataset"], intrinsic, config, args)
+    scalable_integrate_rgb_frames(config["path_dataset"], intrinsic, config)

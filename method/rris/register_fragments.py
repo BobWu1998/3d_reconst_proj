@@ -188,11 +188,11 @@ def make_posegraph_for_scene(ply_file_names, config):
         pose_graph)
 
 
-def run(config, args):
+def run(config):
     print("register fragments.")
     o3d.utility.set_verbosity_level(o3d.utility.VerbosityLevel.Debug)
     ply_file_names = get_file_list(
-        join(args.root, config["path_dataset"], config["folder_fragment"]), ".ply")
+        join(config['root'], config["path_dataset"], config["folder_fragment"]), ".ply")
     
     # breakpoint()
     make_clean_folder(join(config["path_dataset"], config["folder_scene"]))

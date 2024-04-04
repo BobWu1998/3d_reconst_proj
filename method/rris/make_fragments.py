@@ -144,12 +144,9 @@ def make_pointcloud_for_fragment(path_dataset, color_files, depth_files,
 
 def process_single_fragment(fragment_id, color_files, depth_files, n_files,
                             n_fragments, config):
-    if config["path_intrinsic"]:
-        intrinsic = o3d.io.read_pinhole_camera_intrinsic(
-            config["path_intrinsic"])
-    else:
-        intrinsic = o3d.camera.PinholeCameraIntrinsic(
-            o3d.camera.PinholeCameraIntrinsicParameters.PrimeSenseDefault)
+
+    intrinsic = o3d.camera.PinholeCameraIntrinsic(
+        o3d.camera.PinholeCameraIntrinsicParameters.PrimeSenseDefault)
     sid = fragment_id * config['n_frames_per_fragment']
     eid = min(sid + config['n_frames_per_fragment'], n_files)
 
@@ -162,10 +159,9 @@ def process_single_fragment(fragment_id, color_files, depth_files, n_files,
                                  intrinsic, config)
 
 
-def run(config, args):
-    make_clean_folder(join(args.root, config["path_dataset"], config["folder_fragment"]))
-
-    rgb_files, depth_files = load_rgbd(args)
+def run(config):
+    make_clean_folder(join(config['root'], config["path_dataset"], config["folder_fragment"]))
+    rgb_files, depth_files = load_rgbd(config)
     n_files = len(rgb_files)
     n_fragments = int(
         math.ceil(float(n_files) / config['n_frames_per_fragment']))
