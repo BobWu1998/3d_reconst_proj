@@ -43,13 +43,19 @@ def model_update(rgb_files, depth_files, intrinsic, n_files, config):
 
         input_frame.set_data_from_image('depth', depth)
         input_frame.set_data_from_image('color', color)
-
         if i > 0:
-            result = model.track_frame_to_model(input_frame, raycast_frame,
-                                                config['depth_scale'],
-                                                config['depth_max'],
-                                                config['slam_diff_max']) # config.odometry_distance_thr
-            T_frame_to_model = T_frame_to_model @ result.transformation
+            try:
+                result = model.track_frame_to_model(input_frame, raycast_frame,
+                                                    config['depth_scale'],
+                                                    config['depth_max'],
+                                                    config['slam_diff_max']) # config.odometry_distance_thr
+                T_frame_to_model = T_frame_to_model @ result.transformation
+            except RuntimeError as e:
+                # print(f"Tracking failed for this frame due to error: {e}")
+                print(f"Tracking failed for this frame, skipping")
+                err_pose = -1*np.identity(4)
+                poses.append(err_pose)
+                continue
 
         poses.append(T_frame_to_model.cpu().numpy())
         model.update_frame_pose(i, T_frame_to_model)
@@ -70,7 +76,7 @@ def run(config):
         o3d.camera.PinholeCameraIntrinsicParameters.PrimeSenseDefault)
     intrinsic = o3d.core.Tensor(intrinsic.intrinsic_matrix,
                                o3d.core.Dtype.Float64)
-    
+
     volume, poses = model_update(rgb_files, depth_files, intrinsic, n_files, config)
     
     
