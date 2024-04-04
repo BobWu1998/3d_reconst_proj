@@ -57,8 +57,9 @@ def model_update(rgb_files, depth_files, intrinsic, n_files, config):
         model.synthesize_model_frame(raycast_frame, config['depth_scale'],
                                      config['depth_min'], config['depth_max'], False)
         stop = time.time()
-        print('{:04d}/{:04d} slam takes {:.4}s'.format(i, n_files,
-                                                       stop - start))
+        if config['verbose']:
+            print('{:04d}/{:04d} slam takes {:.4}s'.format(i, n_files,
+                                                        stop - start))
     return model.voxel_grid, poses
 
 def run(config):

@@ -65,9 +65,11 @@ def make_posegraph_for_fragment(path_dataset, sid, eid, color_files,
         for t in range(s + 1, eid):
             # odometry
             if t == s + 1:
-                print(
-                    "Fragment %03d / %03d :: RGBD matching between frame : %d and %d"
-                    % (fragment_id, n_fragments - 1, s, t))
+
+                if config['verbose']:
+                    print(
+                        "Fragment %03d / %03d :: RGBD matching between frame : %d and %d"
+                        % (fragment_id, n_fragments - 1, s, t))
                 [success, trans,
                  info] = register_one_rgbd_pair(s, t, color_files, depth_files,
                                                 intrinsic, with_opencv, config)
@@ -86,9 +88,10 @@ def make_posegraph_for_fragment(path_dataset, sid, eid, color_files,
             # keyframe loop closure
             if s % config['n_keyframes_per_n_frame'] == 0 \
                     and t % config['n_keyframes_per_n_frame'] == 0:
-                print(
-                    "Fragment %03d / %03d :: RGBD matching between frame : %d and %d"
-                    % (fragment_id, n_fragments - 1, s, t))
+                if config['verbose']:
+                    print(
+                        "Fragment %03d / %03d :: RGBD matching between frame : %d and %d"
+                        % (fragment_id, n_fragments - 1, s, t))
                 [success, trans,
                  info] = register_one_rgbd_pair(s, t, color_files, depth_files,
                                                 intrinsic, with_opencv, config)
@@ -111,9 +114,10 @@ def integrate_rgb_frames_for_fragment(color_files, depth_files, fragment_id,
         color_type=o3d.pipelines.integration.TSDFVolumeColorType.RGB8)
     for i in range(len(pose_graph.nodes)):
         i_abs = fragment_id * config['n_frames_per_fragment'] + i
-        print(
-            "Fragment %03d / %03d :: integrate rgbd frame %d (%d of %d)." %
-            (fragment_id, n_fragments - 1, i_abs, i + 1, len(pose_graph.nodes)))
+        if config['verbose']:
+            print(
+                "Fragment %03d / %03d :: integrate rgbd frame %d (%d of %d)." %
+                (fragment_id, n_fragments - 1, i_abs, i + 1, len(pose_graph.nodes)))
         rgbd = read_rgbd_image(color_files[i_abs], depth_files[i_abs], False,
                                config)
         pose = pose_graph.nodes[i].pose
@@ -160,6 +164,7 @@ def process_single_fragment(fragment_id, color_files, depth_files, n_files,
 
 
 def run(config):
+    print('making fragments...')
     rgb_files, depth_files = load_rgbd(config)
     n_files = len(rgb_files)
     n_fragments = int(

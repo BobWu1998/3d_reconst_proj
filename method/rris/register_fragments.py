@@ -32,7 +32,8 @@ def preprocess_point_cloud(pcd, config):
 
 
 def register_point_cloud_fpfh(source, target, source_fpfh, target_fpfh, config):
-    o3d.utility.set_verbosity_level(o3d.utility.VerbosityLevel.Debug)
+    if config['verbose']:
+        o3d.utility.set_verbosity_level(o3d.utility.VerbosityLevel.Debug)
     distance_threshold = config["voxel_size"] * 1.4
     if config["global_registration"] == "fgr":
         result = o3d.pipelines.registration.registration_fgr_based_on_feature_matching(
@@ -84,7 +85,8 @@ def compute_initial_registration(s, t, source_down, target_down, source_fpfh,
         if not success:
             print("No reasonable solution. Skip this pair")
             return (False, np.identity(4), np.zeros((6, 6)))
-    print(transformation)
+    if config['verbose']:
+        print(transformation)
 
     if config["debug_mode"]:
         draw_registration_result(source_down, target_down, transformation)
@@ -115,9 +117,9 @@ def update_posegraph_for_scene(s, t, transformation, information, odometry,
 
 
 def register_point_cloud_pair(ply_file_names, s, t, config):
-    print("reading %s ..." % ply_file_names[s])
+    if config['verbose']: print("reading %s ..." % ply_file_names[s])
     source = o3d.io.read_point_cloud(ply_file_names[s])
-    print("reading %s ..." % ply_file_names[t])
+    if config['verbose']: print("reading %s ..." % ply_file_names[t])
     target = o3d.io.read_point_cloud(ply_file_names[t])
     (source_down, source_fpfh) = preprocess_point_cloud(source, config)
     (target_down, target_fpfh) = preprocess_point_cloud(target, config)
@@ -189,8 +191,9 @@ def make_posegraph_for_scene(ply_file_names, config):
 
 
 def run(config):
-    print("register fragments.")
-    o3d.utility.set_verbosity_level(o3d.utility.VerbosityLevel.Debug)
+    print("registering fragments.")
+    if config['verbose']:
+        o3d.utility.set_verbosity_level(o3d.utility.VerbosityLevel.Debug)
     ply_file_names = get_file_list(
         join(config['root'], config["path_dataset"], config["folder_fragment"]), ".ply")
     

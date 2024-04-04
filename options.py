@@ -10,6 +10,7 @@ class Options(object):
         req.add_argument('--num', type=int, required=True, help='Number of the object')
 
         gen = self.parser.add_argument_group('General')
+        gen.add_argument('--verbose', action='store_true', help='allow print verbose statements')
         gen.add_argument('--data_root', type=str, default='/home/bobwu/Documents/shared/rgbd-scenes/', help='Path to the data directory')
         gen.add_argument('--save_path', type=str, default='/home/bobwu/Documents/shared/recon_results/', help='Path to save the output')
         gen.add_argument('--root', type=str, default='/home/bobwu/Documents/3d_reconst_proj/', help='Path to the root directory')

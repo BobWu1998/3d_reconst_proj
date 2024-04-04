@@ -41,10 +41,11 @@ def scalable_integrate_rgb_frames(path_dataset, intrinsic, config):
         for frame_id in range(len(pose_graph_rgbd.nodes)):
             frame_id_abs = fragment_id * \
                     config['n_frames_per_fragment'] + frame_id
-            print(
-                "Fragment %03d / %03d :: integrate rgbd frame %d (%d of %d)." %
-                (fragment_id, n_fragments - 1, frame_id_abs, frame_id + 1,
-                 len(pose_graph_rgbd.nodes)))
+            if config['verbose']:
+                print(
+                    "Fragment %03d / %03d :: integrate rgbd frame %d (%d of %d)." %
+                    (fragment_id, n_fragments - 1, frame_id_abs, frame_id + 1,
+                    len(pose_graph_rgbd.nodes)))
             rgbd = read_rgbd_image(rgb_files[frame_id_abs],
                                    depth_files[frame_id_abs], False, config)
             
@@ -70,7 +71,8 @@ def scalable_integrate_rgb_frames(path_dataset, intrinsic, config):
 
 
 def run(config):
-    print("integrate the whole RGBD sequence using estimated camera pose.")
+    print('integrating the volumes fragments...')
+    # print("integrate the whole RGBD sequence using estimated camera pose.")
     if config["path_intrinsic"]:
         intrinsic = o3d.io.read_pinhole_camera_intrinsic(
             config["path_intrinsic"])
