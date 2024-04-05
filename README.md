@@ -47,11 +47,11 @@ This could take a while, if you interrupt the reconstruction while it's running,
 ## Meshing Reconstruction
 Running RRIS also saves the global point cloud, which you can use for other meshing methods.
 
-To run the Poisson method, run
+For the Poisson method, run
 ```
 python main.py --name rris --obj table --num 1 --method rris --mesh_method poisson --data_root $PATH_TO_RGBD_SCENES --save_path $PATH_TO_RESULTS --enable_viz
 ```
-To run the Alpha Shape method, run
+For the Alpha Shape method, run
 ```
 python main.py --name rris --obj table --num 1 --method rris --mesh_method as --data_root $PATH_TO_RGBD_SCENES --save_path $PATH_TO_RESULTS --enable_viz
 ```
@@ -78,6 +78,6 @@ I also automated the program to run all scenes at once for both SLAM and RRIS ap
 bash slam.sh
 bash rris.sh
 ```
-Running ```rris.sh``` will take about an hour to finish.
+Running ```rris.sh``` will take about an hour to finish. After the job finishes, you can run the visualization code above to inspect it.
 
 
