@@ -1,5 +1,5 @@
 # 3d_reconst_proj
-This project contains work of reconstructing [UWashington dataset](https://rgbd-dataset.cs.washington.edu/dataset/rgbd-scenes/). It realizes two pipeline for 3D reconstruction. 
+This project contains work of reconstructing the [UWashington dataset](https://rgbd-dataset.cs.washington.edu/dataset/rgbd-scenes/). It implements two pipelines for 3D reconstruction. 
 
 The first approach utilizes RGBD Odometry for SLAM in the dataset, a volume is constructed during the reconstruction and directly used for mesh generation.
 
