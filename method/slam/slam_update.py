@@ -91,9 +91,8 @@ def run(config):
     mesh.compute_vertex_normals()
     mesh.compute_triangle_normals()
     flip_transform = [[1, 0, 0, 0], [0, -1, 0, 0], [0, 0, -1, 0], [0, 0, 0, 1]]
-    # o3d.io.write_triangle_mesh(mesh_name, mesh, False, True)
-    o3d.io.write_triangle_mesh(mesh_name, mesh.transform(flip_transform), False, True)
-    
+    o3d.io.write_triangle_mesh(mesh_name, mesh, False, True)
+        
     # save the pose log
     traj_name = join(path_dataset, config["template_global_traj"])
     write_poses_to_log(traj_name, poses)

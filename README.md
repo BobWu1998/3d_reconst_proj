@@ -26,8 +26,10 @@ To activate the environment, run
 conda activate recon
 cd $PATH_TO_REPO
 ```
-## SLAM using RGBD Odometry
 
+Below are the commands to run reconstruction with different methods, note for simplicity, I only provide the command for one scene, e.g. For table_1 in the dataset, we set ```--obj table --num 1```. At the end of this page, I provide the bash file to automate the experiments for all objects in the dataset.
+
+## SLAM using RGBD Odometry
 
 To run the SLAM Pipeline:
 ```
@@ -62,7 +64,11 @@ python visualize.py --name rris --obj table --num 1 --viz_mode pcd --data_root $
 
 If you ran the experiments without enabling the visualization, you can always visualize the saved meshes by running 
 ```
-python visualize.py --name rris --obj table --num 1 --viz_mode mesh --mesh_method volumetric --data_root $PATH_TO_RGBD_SCENES --save_path $PATH_TO_RESULTS 
+# running on meshes generated with rris
+python visualize.py --name rris --obj table --num 1 --viz_mode mesh --method rris --mesh_method volumetric --data_root $PATH_TO_RGBD_SCENES --save_path $PATH_TO_RESULTS 
+
+# running on meshes generated with slam
+python visualize.py --name rris --obj table --num 1 --viz_mode mesh --method rris --mesh_method volumetric --data_root $PATH_TO_RGBD_SCENES --save_path $PATH_TO_RESULTS 
 ```
 Available mesh_method: volumetric, poisson, as
 

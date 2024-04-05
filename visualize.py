@@ -4,6 +4,9 @@ from options import Options
 from config_init import get_config
 from os.path import join
 
+flip_transform = [[1, 0, 0, 0], [0, -1, 0, 0], [0, 0, -1, 0], [0, 0, 0, 1]]
+
+
 if __name__ == "__main__":
     option = Options()
     args = option.parser.parse_args()
@@ -20,7 +23,8 @@ if __name__ == "__main__":
             
         mesh = o3d.io.read_triangle_mesh(mesh_name)
         mesh.compute_vertex_normals()
-        
+        if config['method'] == 'slam':
+            mesh = mesh.transform(flip_transform)
         o3d.visualization.draw_geometries([mesh])
         
     elif config['viz_mode'] == 'pcd':
