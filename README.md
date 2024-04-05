@@ -78,6 +78,6 @@ I also automated the program to run all scenes at once for both SLAM and RRIS ap
 bash slam.sh
 bash rris.sh
 ```
-
+Running ```rris.sh``` will take about an hour to finish.
 
 
